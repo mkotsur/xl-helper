@@ -1,0 +1,20 @@
+[deployit]
+username=admin
+password=admin
+protocol=http
+host=localhost
+port=4516
+
+[license]
+location=~/ddd/deployit-license.lic
+location_3x=~/ddd/deployit3-license.lic
+
+[jenkins]
+url=https://dexter.xebialabs.com/jenkinsng
+server-job=XL Deploy (master)
+username=myuser
+password=mysecret
+
+[downloads]
+username=download
+password=blablabla
