@@ -1,4 +1,4 @@
-from actions.Installer import Installer
+from xl_helper.actions.Installer import Installer
 from xl_helper.actions.Uninstaller import Uninstaller
 from xl_helper.artifacts.server.RemoteServerDist import RemoteServerDist
 from xl_helper.artifacts.server.LocalServerDist import LocalServerDist
