@@ -1,3 +1,4 @@
+.vagrant
 dist
 *.egg-info
 .idea
