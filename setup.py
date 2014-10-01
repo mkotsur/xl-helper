@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='xl-helper',
-      version='1.0.3',
+      version='1.0.4',
       description='XL Deploy helper',
       long_description='This tool helps with installation and upgrade of XL Deploy and plugins',
       author='Mike Kotsur',
