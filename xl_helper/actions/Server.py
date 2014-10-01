@@ -44,7 +44,9 @@ class Server:
 
             if not os.path.isdir("{path}/repository".format(path=self.home)):
                 print "Initializing XL Deploy with default configuration."
-                shutil.copy(FileUtils.to_absolute_path("resources/deployit.conf"), os.path.join(self.home, "conf"))
+                config_path = FileUtils.to_absolute_path("xl_helper/resources/deployit.conf")
+                print "It is taken from %s " % config_path
+                shutil.copy(config_path, os.path.join(self.home, "conf"))
                 p = Popen([server_sh_file, '-setup', '-reinitialize'], bufsize=0, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
                 p.stdin.write("yes\n")
                 p.stdin.flush()

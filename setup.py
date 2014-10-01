@@ -10,6 +10,10 @@ setup(name='xl-helper',
       author_email='mkotsur@xebialabs.com',
       url='http://xebialabs.com/',
       packages=find_packages(where=".", exclude=["tests*"]),
+      package_data={
+        'xl_helper': ['deployit.conf']
+      },
+      include_package_data=True,
       install_requires=['jenkinsapi', 'argparse'],
       scripts=['bin/xl-helper']
 )
