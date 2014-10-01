@@ -25,7 +25,8 @@ class Engine:
                 )
             elif subject == 'cli':
                 installer.cli(version, self.path)
-
+            elif subject == 'plugin':
+                installer.plugin(plugin_name, version, self.path)
             else:
                 raise Exception("Unknown subject %s" % subject)
         elif op == 'update':
