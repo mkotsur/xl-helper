@@ -49,6 +49,12 @@ It's much more convenient to use `xl-helper` with configured bash alias:
 * Versioning and and distribution of the tool
 * Handle more corner-cases and errors
 
+## Bugs
+
+* Installation from an archive "xl-deploy-5.0.0-SNAPSHOT-sat-server.zip" does not work
+  ** If it is impossible to detect, then give a clear error and provide an option to specify version manually
+
+
 ## Unit tests
 
 Adding feature = Writing test + writing code
