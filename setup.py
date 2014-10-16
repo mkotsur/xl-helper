@@ -15,5 +15,5 @@ setup(name='xl-helper',
       },
       include_package_data=True,
       install_requires=['jenkinsapi', 'argparse'],
-      scripts=['bin/xl-helper']
+      scripts=['xl-helper']
 )
