@@ -1,16 +1,20 @@
 import os
 
+from os.path import expanduser
+
 
 class Cache:
 
-    def __init__(self, location):
-        self.location = location
-
-    @classmethod
-    def in_default_location(cls):
-        return Cache("/tmp")
+    def __init__(self, config):
+        self.location = expanduser(config.get("cache", "location"))
 
     def get(self, dist):
+
+        if not os.path.isdir(self.location):
+            print("Creating cache directory %s since it does not exist" % self.location)
+            os.makedirs(self.location)
+        else:
+            print("Using cache at %s" % self.location)
 
         artifact_location = os.path.join(self.location, dist.get_filename())
 

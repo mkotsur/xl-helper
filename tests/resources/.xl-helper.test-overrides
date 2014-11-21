@@ -1,0 +1,9 @@
+[deployit]
+username=admin
+password=admin
+protocol=http
+host=localhost
+port=4516
+
+[cache]
+location=~/.xl-helper-cache

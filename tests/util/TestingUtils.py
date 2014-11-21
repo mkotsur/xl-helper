@@ -1,28 +1,16 @@
-import io
-import ConfigParser
-from os.path import expanduser
-from os.path import join
+from xl_helper.FileUtils import FileUtils
+from xl_helper.XlHelperConfig import XlHelperConfig
 
 
 class TestingUtils(object):
 
     @staticmethod
-    def get_test_config():
+    def get_test_config(include_jenkins=False):
 
-        sample_config = """
-[jenkins]
-server-job=XL Deploy (master)
-url=https://somehost.com
-username=bla
-password=blabla
-[deployit]
-username=admin
-password=admin
-protocol=http
-host=localhost
-port=4516
-"""
-        config = ConfigParser.RawConfigParser(allow_no_value=True)
-        config.read([join(expanduser("~"), '.xl-helper')])
-        config.readfp(io.BytesIO(sample_config))
+        config = XlHelperConfig.config
+        config.read(FileUtils.to_absolute_path("tests/resources/.xl-helper.test-overrides"))
+
+        if not include_jenkins:
+            config.remove_section('jenkins')
+
         return config

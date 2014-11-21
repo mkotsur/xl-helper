@@ -41,12 +41,10 @@ It's much more convenient to use `xl-helper` with configured bash alias:
 
 ## Desired features
 
-* Unhardcode cache location (currently `/tmp`)
 * In-place upgrade of the server
 * Installation of plugins snapshots
 * Install-as-update for the plugins: install if plugin is missing, upgrade/downgrade if already present
 * Plugin upgrade should fail if the plugin is not installed/or newer version is installed
-* Versioning and and distribution of the tool
 * Handle more corner-cases and errors
 
 ## Bugs

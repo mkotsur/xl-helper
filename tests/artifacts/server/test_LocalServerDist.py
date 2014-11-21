@@ -7,7 +7,7 @@ from tests.util.TestWithTempDirs import TestWithTempDirs
 class LocalServerDistTest(TestWithTempDirs):
 
     def setUp(self):
-        remote_dist = Cache.in_default_location().get(RemoteServerDist("4.0.1", self.test_config))
+        remote_dist = Cache(self.test_config).get(RemoteServerDist("4.0.1", self.test_config))
         self.local_server_dist = LocalServerDist(remote_dist)
 
     def test_should_detect_version(self):

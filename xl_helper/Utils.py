@@ -9,7 +9,6 @@ class Utils:
 
     __base_download_url = "https://tech.xebialabs.com/download"
 
-
     @staticmethod
     def build_product_label(_version):
         return 'xl-deploy' if int(_version.split()[0][0]) >= 4 else 'deployit'

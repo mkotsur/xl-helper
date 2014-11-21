@@ -14,9 +14,8 @@ from xl_helper.artifacts.server.LocalServerDist import LocalServerDist
 
 class Installer:
 
-    cache = Cache.in_default_location()
-
     def __init__(self, config):
+        self.cache = Cache(config)
         self.license_location = os.path.expanduser(config.get('license', 'location'))
         self.license_location_3x = os.path.expanduser(config.get('license', 'location_3x'))
         self.config = config

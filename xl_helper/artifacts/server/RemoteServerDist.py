@@ -8,15 +8,19 @@ class RemoteServerDist(ServerDist):
     def __init__(self, version, config):
         self.config = config
         self.version = version
-        self._jobName = self.config.get('jenkins', 'server-job')
         self._downloadsUsername = self.config.get('downloads', 'username')
         self._downloadsPassword = self.config.get('downloads', 'password')
-        self._jenkins = Jenkins(
-            self.config.get('jenkins', 'url'),
-            self.config.get('jenkins', 'username'),
-            self.config.get('jenkins', 'password'),
-            lazy=True
-        )
+
+        if config.has_section('jenkins'):
+            self._jobName = self.config.get('jenkins', 'server-job')
+            self._jenkins = Jenkins(
+                self.config.get('jenkins', 'url'),
+                self.config.get('jenkins', 'username'),
+                self.config.get('jenkins', 'password'),
+                lazy=True
+            )
+        elif self.version == 'SNAPSHOT':
+            raise Exception("Please configure jenkins section in your config file in order to install snapshots.")
 
     def download(self, target):
         print "Downloading: %s" % self.get_filename()
