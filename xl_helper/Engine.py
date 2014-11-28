@@ -1,4 +1,5 @@
 from xl_helper.actions.Installer import Installer
+from xl_helper.actions.Upgrader import Upgrader
 from xl_helper.actions.Uninstaller import Uninstaller
 from xl_helper.artifacts.server.RemoteServerDist import RemoteServerDist
 from xl_helper.artifacts.server.LocalServerDist import LocalServerDist
@@ -14,6 +15,7 @@ class Engine:
         if op == 'install':
 
             installer = Installer(self.config)
+            upgrader = Upgrader(self.config)
 
             if subject == 'server':
                 dist = RemoteServerDist(version, self.config) if distribution_path is None else LocalServerDist(distribution_path)
@@ -29,8 +31,12 @@ class Engine:
                 installer.plugin(plugin_name, version, self.path)
             else:
                 raise Exception("Unknown subject %s" % subject)
-        elif op == 'update':
-            print "Update"
+        elif op == 'upgrade':
+            if subject == 'server':
+                dist = RemoteServerDist(version, self.config) if distribution_path is None else LocalServerDist(distribution_path)
+                Upgrader(self.config).upgrade(self.path, dist)
+            else:
+                raise Exception("Upgrade is supported only for server")
         elif op == 'uninstall':
             uninstaller = Uninstaller()
 

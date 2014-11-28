@@ -23,7 +23,7 @@ class InstallerTest(TestWithTempDirs):
         assert home.endswith('xl-deploy-4.0.0-server')
         self._assert_valid_server_installation(home)
 
-    def test_update_server(self):
+    def xtest_update_server(self):
         home_3 = self.installer.server(RemoteServerDist('3.9.2', self.test_config), target=self.temp_dir)
         self.installer.plugin('was', '3.9.0', home_3)
 

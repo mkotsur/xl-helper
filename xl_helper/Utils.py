@@ -142,7 +142,7 @@ class Utils:
         sys.stdout.flush()
 
     @staticmethod
-    def wait_until(some_predicate, timeout=20, period=0.25, tick=False):
+    def wait_until(some_predicate, timeout=30, period=1, tick=False):
         must_end = time.time() + timeout
         while time.time() < must_end:
             if some_predicate():

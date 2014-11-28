@@ -12,13 +12,13 @@ from xl_helper.FileUtils import FileUtils
 #         self.config = config
 #         self.installer = Installer(config)
 #
-#     def server(self, dist, location, start=False):
+#     def server(self, dist, location, run=False):
 #         backup_location = location + '_old'
 #         FileUtils.delete_dirs(backup_location)
 #         shutil.copytree(location, backup_location)
 #         FileUtils.delete_contents(location)
 #
-#         new_version_dir = self.installer.server(dist, os.path.join(location, os.path.pardir), start)
+#         new_version_dir = self.installer.server(dist, os.path.join(location, os.path.pardir), run)
 #
 #         print "new_version_dir: " + new_version_dir
 #

@@ -7,7 +7,7 @@ class Argh:
     @staticmethod
     def createParser():
         parser = ArgumentParser(description='XL helper')
-        parser.add_argument('action', choices=['install', 'update', 'uninstall'], type=str, help='What you want to do.')
+        parser.add_argument('action', choices=['install', 'upgrade', 'uninstall'], type=str, help='What you want to do.')
         parser.add_argument('subject', choices=['server', 'plugin', 'cli'], type=str, help='What will be affected.')
         parser.add_argument('plugin', metavar='PLUGIN_ID', nargs='?', type=str, help='Plugin id.', default=None)
         parser.add_argument('--version', metavar='VER', type=str, help='Version. No version means latest snapshot.', required=False, default='SNAPSHOT')

@@ -5,7 +5,7 @@ from xl_helper.artifacts.SemanticVersion import SemanticVersion
 
 class Plugin:
 
-    plugin_name_matcher = re.compile('.*-plugin-([0-9\.]+(-SNAPSHOT)?)\.jar')
+    plugin_name_matcher = re.compile('.*-(plugin|extension)-([0-9\.]+(-SNAPSHOT)?)(\.jar|-xlPlugin\.xldp)')
 
     @staticmethod
     def is_plugin(path):

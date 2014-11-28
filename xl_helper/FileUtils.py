@@ -37,6 +37,20 @@ class FileUtils:
                 shutil.copyfile(os.path.join(root, f), os.path.join(dst, f))
 
     @staticmethod
+    def move_contents(src, dst):
+        if not os.path.isdir(src):
+            return
+
+        if not os.path.isdir(dst):
+            os.mkdir(dst)
+
+        for root, dirs, files in os.walk(src):
+            for d in dirs:
+                shutil.move(os.path.join(root, d), dst)
+            for f in files:
+                shutil.move(os.path.join(root, f), os.path.join(dst, f))
+
+    @staticmethod
     def to_absolute_path(relative_path):
         return os.path.normpath(os.path.join(os.path.dirname(__file__ ), '..', relative_path))
 

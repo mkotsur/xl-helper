@@ -36,9 +36,16 @@ class Server:
 
     def restart(self):
         self.stop()
-        self.start()
+        self.run()
 
-    def start(self):
+    # Starts the server in different thread
+    def start_and_wait(self):
+        import thread
+        thread.start_new_thread(self.run, ())
+        Utils.wait_until(self.is_running, tick=True)
+
+    # Starts the server in the same thread
+    def run(self):
         if self.is_stopped():
             server_sh_file = "{}/bin/server.sh".format(self.home)
 
@@ -65,6 +72,10 @@ class Server:
             opener = Utils.auth_and_open_url(stop_url, 'POST', self.username, self.password)
             print "Stopping the server"
             urllib2.install_opener(opener)
+
+    def stop_and_wait(self):
+        self.stop()
+        Utils.wait_until(self.is_stopped, tick=True)
 
     def _ping(self):
         try:

@@ -4,10 +4,7 @@ from zipfile import ZipFile
 
 from xl_helper.Utils import Utils
 from Server import Server
-from xl_helper.artifacts.Plugin import Plugin
 from xl_helper.artifacts.Cache import Cache
-from xl_helper.artifacts.PluginsSelection import PluginsSelection
-from distutils import dir_util
 from xl_helper.artifacts.cli.DownloadsCliDist import DownloadsCliDist
 from xl_helper.artifacts.server.LocalServerDist import LocalServerDist
 
@@ -37,7 +34,7 @@ class Installer:
                 if file_.endswith('.jar'):
                     shutil.copy(os.path.join(root, file_), os.path.join(server_dir, 'plugins', file_))
 
-        proper_license = self.license_location if (dist.version.startswith('4') or dist.version == 'SNAPSHOT') else self.license_location_3x
+        proper_license = self.license_location if (dist.version == 'SNAPSHOT' or int(dist.version[0]) >= 4) else self.license_location_3x
 
         print "Copying license from %s" % proper_license
         shutil.copy(proper_license, os.path.join(server_dir, 'conf', 'deployit-license.lic'))
@@ -48,25 +45,13 @@ class Installer:
                     os.chmod(dirpath + '/' + filename, 0750)
 
         if upgrade_from_path is not None:
-            print "Copying files from old installation at %s" % upgrade_from_path
-            if os.path.isdir(os.path.join(upgrade_from_path, 'repository')):
-                dir_util.copy_tree(os.path.join(upgrade_from_path, 'repository'), os.path.join(server_dir, 'repository'))
-            dir_util.copy_tree(os.path.join(upgrade_from_path, 'plugins'), os.path.join(server_dir, 'plugins'))
-            dir_util.copy_tree(os.path.join(upgrade_from_path, 'conf'), os.path.join(server_dir, 'conf'))
-            dir_util.copy_tree(os.path.join(upgrade_from_path, 'ext'), os.path.join(server_dir, 'ext'))
-            self._remove_old_plugins(server_dir)
+            raise Exception("Please use xl-helper upgrade ... " + str(upgrade_from_path))
 
         if start:
-            Server.from_config(config=self.config, home=server_dir).start()
+            Server.from_config(config=self.config, home=server_dir).run()
 
         return server_dir
 
-    def _remove_old_plugins(self, server_location):
-        plugins_path = os.path.join(server_location, 'plugins')
-        for root, dirs, files in os.walk(plugins_path):
-            plugins_selection = PluginsSelection(map(Plugin, filter(Plugin.is_plugin, files)))
-            for op in plugins_selection.get_outdated_plugins():
-                os.remove(os.path.join(plugins_path, op.filename))
 
     def plugin(self, name, version, server_location):
         plugins_path = os.path.join(server_location, 'plugins')
