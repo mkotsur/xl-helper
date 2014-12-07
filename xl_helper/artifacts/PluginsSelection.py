@@ -9,7 +9,7 @@ class PluginsSelection:
         outdated = []
         for p in self.plugins:
             old_plugin = self._get_older_version_of_plugin(p)
-            if old_plugin is not None and not old_plugin in outdated:
+            if old_plugin is not None and old_plugin not in outdated:
                 outdated.append(old_plugin)
         return outdated
 

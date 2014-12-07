@@ -4,8 +4,11 @@ import os
 
 class Argh:
 
+    def __init__(self):
+        pass
+
     @staticmethod
-    def createParser():
+    def create_parser():
         parser = ArgumentParser(description='XL helper')
         parser.add_argument('action', choices=['install', 'upgrade', 'uninstall'], type=str, help='What you want to do.')
         parser.add_argument('subject', choices=['server', 'plugin', 'cli'], type=str, help='What will be affected.')

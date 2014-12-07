@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 
-from xl_helper.Utils import Utils
-
 from xl_helper.Engine import Engine
 from xl_helper.Argh import Argh
 from xl_helper.XlHelperConfig import XlHelperConfig
 
 if __name__ == "__main__":
-    args = Argh.createParser().parse_args()
+    args = Argh.create_parser().parse_args()
 
     Engine(args.path, XlHelperConfig.config).run(
         op=args.action,

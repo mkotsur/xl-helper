@@ -6,6 +6,9 @@ from xl_helper.Utils import Utils
 
 class Uninstaller:
 
+    def __init__(self):
+        pass
+
     def server(self, version, location):
         server_dir = os.path.join(location, Utils.build_server_dir_name(version))
         if os.path.isdir(server_dir):

@@ -52,7 +52,7 @@ class FileUtils:
 
     @staticmethod
     def to_absolute_path(relative_path):
-        return os.path.normpath(os.path.join(os.path.dirname(__file__ ), '..', relative_path))
+        return os.path.normpath(os.path.join(os.path.dirname(__file__), '..', relative_path))
 
     @staticmethod
     def proj_folder():

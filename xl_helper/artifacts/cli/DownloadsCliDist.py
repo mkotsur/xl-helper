@@ -1,5 +1,6 @@
 from xl_helper.Utils import Utils
 
+
 class DownloadsCliDist:
 
     def __init__(self, version, config):

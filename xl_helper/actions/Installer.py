@@ -52,7 +52,6 @@ class Installer:
 
         return server_dir
 
-
     def plugin(self, name, version, server_location):
         plugins_path = os.path.join(server_location, 'plugins')
 

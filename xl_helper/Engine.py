@@ -15,7 +15,6 @@ class Engine:
         if op == 'install':
 
             installer = Installer(self.config)
-            upgrader = Upgrader(self.config)
 
             if subject == 'server':
                 dist = RemoteServerDist(version, self.config) if distribution_path is None else LocalServerDist(distribution_path)
