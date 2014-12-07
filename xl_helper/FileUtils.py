@@ -12,7 +12,7 @@ class FileUtils:
     def delete_dirs(*paths):
         for path in paths:
             if os.path.isdir(path):
-                shutil.rmtree(path)
+                shutil.rmtree(path, ignore_errors=True)
 
     @staticmethod
     def delete_contents(location):

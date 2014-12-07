@@ -1,10 +1,10 @@
 import os
 import shutil
 import urllib2
-from urlparse import urljoin
 from xl_helper.FileUtils import FileUtils
 from subprocess import Popen, PIPE, STDOUT
 from xl_helper.Utils import Utils
+from string import join
 
 
 class Server:
@@ -39,30 +39,30 @@ class Server:
         self.run()
 
     # Starts the server in different thread
-    def start_and_wait(self):
+    def start(self):
         import thread
         thread.start_new_thread(self.run, ())
+
+    # Starts the server in different thread and waits for the response
+    def start_and_wait(self):
+        self.start()
         Utils.wait_until(self.is_running, tick=True)
 
     # Starts the server in the same thread
     def run(self):
         if self.is_stopped():
-            server_sh_file = "{}/bin/server.sh".format(self.home)
 
             if not os.path.isdir("{path}/repository".format(path=self.home)):
                 print "Initializing XL Deploy with default configuration."
                 config_path = FileUtils.to_absolute_path("xl_helper/resources/deployit.conf")
                 print "It is taken from %s " % config_path
                 shutil.copy(config_path, os.path.join(self.home, "conf"))
-                p = Popen([server_sh_file, '-setup', '-reinitialize'], bufsize=0, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+                p = Popen([self._get_run_script(), '-setup', '-reinitialize'], bufsize=0, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
                 p.stdin.write("yes\n")
                 p.stdin.flush()
                 p.communicate()
 
-            if not os.path.isfile(server_sh_file):
-                print "Server cannot be started as file {} hasn't been found".format(server_sh_file)
-            else:
-                os.system(server_sh_file)
+            os.system(self._get_run_script())
         else:
             print "Server is already started"
 
@@ -86,3 +86,16 @@ class Server:
             return True
         except urllib2.URLError:
             return False
+
+    def _get_run_script(self):
+        server_sh = "%s/bin/server.sh" % self.home
+        run_sh = "%s/bin/run.sh" % self.home
+        candidates = [server_sh, run_sh]
+
+        if os.path.isfile(server_sh):
+            return server_sh
+        elif os.path.isfile(run_sh):
+            return run_sh
+        else:
+            raise Exception("Server cannot be started as start script hasn't been found. Considered candidates: %s" % join(candidates))
+

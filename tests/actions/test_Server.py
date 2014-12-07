@@ -14,7 +14,7 @@ class ServerTest(TestWithTempDirs):
         temp_dir = self.create_temp_dir()
 
         home = self.installer.server(RemoteServerDist('4.0.0', self.test_config), temp_dir)
-        self.server = Server.from_config(home, self.test_config)
+        self.server = Server.from_config(config=self.test_config, home=home)
 
     def tearDown(self):
         self.server.stop_and_wait()
@@ -23,7 +23,7 @@ class ServerTest(TestWithTempDirs):
         assert not self.server.is_running()
         assert self.server.is_stopped()
 
-        self.server.start_and_wait()
+        self.server.start()
         assert not self.server.is_running()  # still starting
         Utils.wait_until(self.server.is_running, tick=True)
         assert not self.server.is_stopped()  # has started starting
@@ -34,5 +34,4 @@ class ServerTest(TestWithTempDirs):
 
         self.server.stop_and_wait()
         assert not self.server.is_running()
-
 

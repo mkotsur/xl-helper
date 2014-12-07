@@ -10,6 +10,7 @@ class PluginsSelectionTest(unittest.TestCase):
     was3_9 = Plugin("was-plugin-3.9.0.jar")
     wls4_0_snapshot = Plugin("wls-plugin-4.0.0-SNAPSHOT.jar")
     wls4_5 = Plugin("wls-plugin-4.5.0.jar")
+    wls5_0 = Plugin("wls-plugin-5.0.0-xlPlugin.xldp")
 
     def test_no_duplicated_plugins(self):
         selection = PluginsSelection([self.was4_0, self.wls4_5])
@@ -27,3 +28,15 @@ class PluginsSelectionTest(unittest.TestCase):
             selection.get_outdated_plugins(),
             [self.was3_9, self.wls4_0_snapshot]
         )
+
+    def test_no_duplicated_with_xldp(self):
+        selection = PluginsSelection([self.was4_0, self.wls5_0])
+        self.assertEqual(selection.get_outdated_plugins(), [])
+
+    def test_some_duplicated_with_xldp(self):
+        selection = PluginsSelection([
+            self.was3_9,
+            self.wls5_0,
+            self.wls4_5
+        ])
+        self.assertEqual(selection.get_outdated_plugins(), [self.wls4_5])

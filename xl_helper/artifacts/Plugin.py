@@ -5,7 +5,7 @@ from xl_helper.artifacts.SemanticVersion import SemanticVersion
 
 class Plugin:
 
-    plugin_name_matcher = re.compile('.*-(plugin|extension)-([0-9\.]+(-SNAPSHOT)?)(\.jar|-xlPlugin\.xldp)')
+    plugin_name_matcher = re.compile('.*\-(plugin|extension)\-([0-9\.]+(-SNAPSHOT)?)(\.jar|-xlPlugin\.xldp)')
 
     @staticmethod
     def is_plugin(path):
@@ -19,7 +19,7 @@ class Plugin:
 
     def get_version(self):
         version_matches = self.plugin_name_matcher.match(self.filename)
-        return version_matches.group(1)
+        return version_matches.group(2)
 
     def get_sem_version(self):
         return SemanticVersion(self.get_version())

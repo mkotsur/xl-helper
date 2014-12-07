@@ -11,7 +11,7 @@ setup(name='xl-helper',
       url='http://xebialabs.com/',
       packages=find_packages(where=".", exclude=["tests*"]),
       package_data={
-        'xl_helper': ['deployit.conf']
+        'xl_helper': ['deployit.conf', '.xl-helper.defaults']
       },
       include_package_data=True,
       install_requires=['jenkinsapi', 'argparse'],

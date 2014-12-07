@@ -1,3 +1,6 @@
+# This file contains default configuration values of xl-helper
+# They can always be overriden at ~/.xl-helper
+
 [deployit]
 username=admin
 password=admin
