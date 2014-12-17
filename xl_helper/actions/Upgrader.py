@@ -17,32 +17,36 @@ class Upgrader:
 
     def upgrade(self, home, to_dist, target=None):
 
-        target = home if target is None else target
+        temp_backup_dir = None
+        temp_install_dir = tempfile.mkdtemp("xld_install")
+
+        target = home if target is None else FileUtils.ensure_empty_dir(target)
+
+        if home == target:
+            temp_backup_dir = tempfile.mkdtemp("xld_backup")
+            print("Creating backup at [%s]" % temp_backup_dir)
+            FileUtils.move_contents(home, temp_backup_dir)
+
         server = Server.from_config(self.config, home)
         was_running = server.is_running()
         server.stop()
 
         print("Upgrading [%s] to version [%s] at [%s]" % (home, to_dist.version, target))
 
-        temp_backup_dir = tempfile.mkdtemp("xld_backup")
-        temp_install_dir = tempfile.mkdtemp("xld_backup")
         try:
-            print("Creating backup at [%s]" % temp_backup_dir)
-            FileUtils.move_contents(home, temp_backup_dir)
 
             print "Installing [%s]" % to_dist.version
 
             new_version_home = Installer(self.config).server(to_dist, temp_install_dir, None, was_running)
             FileUtils.move_contents(new_version_home, home)
 
-            print "Copying files backup [%s] installation into [%s]" % (temp_backup_dir, home)
-            if path.isdir(path.join(temp_backup_dir, 'repository')):
-                dir_util.copy_tree(path.join(temp_backup_dir, 'repository'), path.join(home, 'repository'))
+            print "Copying files backup [%s] installation into [%s]" % (temp_backup_dir, target)
 
-            dir_util.copy_tree(path.join(temp_backup_dir, 'plugins'), path.join(home, 'plugins'))
-            dir_util.copy_tree(path.join(temp_backup_dir, 'conf'), path.join(home, 'conf'))
-            dir_util.copy_tree(path.join(temp_backup_dir, 'ext'), path.join(home, 'ext'))
-            self._remove_old_plugins(home)
+            FileUtils.copy_subfolder(temp_backup_dir, target, 'repository')
+            FileUtils.copy_subfolder(temp_backup_dir, target, 'plugins')
+            FileUtils.copy_subfolder(temp_backup_dir, target, 'conf')
+            FileUtils.copy_subfolder(temp_backup_dir, target, 'ext')
+            self._remove_old_plugins(target)
         finally:
             shutil.rmtree(temp_backup_dir)
             shutil.rmtree(temp_install_dir)

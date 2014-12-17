@@ -1,12 +1,40 @@
 import inspect
 import os
 import shutil
-
+from distutils import dir_util
 
 class FileUtils:
 
     def __init__(self):
         pass
+
+
+    @staticmethod
+    def ensure_empty_dir(path):
+        if os.path.exists(path) and (not os.path.isdir(path) or os.listdir(path) != []):
+            raise Exception("Expected %s either not to exist or be an empty dir" % path)
+        elif not os.path.exists(path):
+            os.mkdir(path)
+
+        return path
+
+    @staticmethod
+    def copy_subfolder(p1, p2, folder):
+        p1_sub = os.path.join(p1, folder)
+        if not os.path.isdir(p1_sub):
+            return
+        p2_sub = os.path.join(p2, folder)
+        if not os.path.isdir(p2_sub):
+            os.mkdir(p2_sub)
+        dir_util.copy_tree(p1_sub, p2_sub)
+
+
+    @staticmethod
+    def create_dir_if_not_exists(path):
+        if os.path.exists(path) and not os.path.isdir(path):
+            raise Exception("Path % exists, but it is not a directory" % path)
+
+        os.mkdir(path)
 
     @staticmethod
     def delete_dirs(*paths):

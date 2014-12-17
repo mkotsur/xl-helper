@@ -26,18 +26,6 @@ class InstallerTest(TestWithTempDirs):
         assert home.endswith('xl-deploy-4.0.0-server')
         TestingUtils.assert_valid_server_installation(home)
 
-    def test_update_server(self):
-        home_3 = self.installer.server(RemoteServerDist('3.9.2', self.test_config), target=self.temp_dir)
-        self.installer.plugin('was', '3.9.0', home_3)
-
-        home_4 = self.installer.server(RemoteServerDist('4.5.0', self.test_config), target=self.temp_dir, upgrade_from_path=home_3)
-        assert home_4.endswith('xl-deploy-4.5.0-server')
-        TestingUtils.assert_valid_server_installation(home_4)
-
-        assert path.isfile(path.join(home_4, 'plugins/file-plugin-4.5.0.jar'))
-        assert path.isfile(path.join(home_4, 'plugins/was-plugin-3.9.0.jar'))
-        assert not path.isfile(path.join(home_4, 'plugins/file-plugin-3.9.2.jar'))
-
     def test_install_plugin(self):
         home = self.installer.server(RemoteServerDist('3.9.2', self.test_config), target=self.temp_dir)
         assert not path.isfile(path.join(home, 'plugins/jbossas-plugin-3.9.0.jar'))

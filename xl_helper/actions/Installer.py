@@ -19,6 +19,9 @@ class Installer:
 
     def server(self, dist, target, upgrade_from_path=None, start=False):
 
+        if upgrade_from_path is not None:
+            raise Exception("***DEPRECATED*** Please use \"xl-helper upgrade server\"")
+
         source = dist.path if isinstance(dist, LocalServerDist) else self.cache.get(dist)
 
         ZipFile(source, 'r').extractall(target)
@@ -43,9 +46,6 @@ class Installer:
             for filename in file_names:
                 if filename.endswith(".sh"):
                     os.chmod(dirpath + '/' + filename, 0750)
-
-        if upgrade_from_path is not None:
-            raise Exception("Please use xl-helper upgrade ... " + str(upgrade_from_path))
 
         if start:
             Server.from_config(config=self.config, home=server_dir).run()

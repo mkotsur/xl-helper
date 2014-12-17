@@ -22,6 +22,19 @@ class UpgraderTest(TestWithTempDirs):
         self.upgrader.upgrade(home, RemoteServerDist("4.5.2", self.test_config))
         self._assert_correct_installation(home, "4.5.2")
 
+    def test_update_server(self):
+        home_3 = self.installer.server(RemoteServerDist('3.9.2', self.test_config), target=self.temp_dir)
+        self.installer.plugin('was', '3.9.0', home_3)
+
+        new_home = self.default_temp + "/new-ver"
+        self.upgrader.upgrade(home_3, RemoteServerDist("4.5.2", self.test_config), new_home)
+
+        TestingUtils.assert_valid_server_installation(new_home)
+
+        assert path.isfile(path.join(new_home, 'plugins/file-plugin-4.5.2.jar'))
+        assert not path.isfile(path.join(new_home, 'plugins/file-plugin-3.9.2.jar'))
+        assert path.isfile(path.join(new_home, 'plugins/was-plugin-3.9.0.jar'))
+
     # Extra assertions
 
     def _assert_correct_installation(self, home, version):
