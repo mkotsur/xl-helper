@@ -7,7 +7,7 @@ class Utils:
     def __init__(self):
         pass
 
-    __base_download_url = "https://tech.xebialabs.com/download"
+    __base_download_url = "https://dist.xebialabs.com"
 
     @staticmethod
     def build_product_label(_version):

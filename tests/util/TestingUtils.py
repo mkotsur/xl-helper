@@ -1,5 +1,4 @@
 from os import path
-from xl_helper.FileUtils import FileUtils
 from xl_helper.XlHelperConfig import XlHelperConfig
 
 
@@ -14,10 +13,6 @@ class TestingUtils(object):
             config.remove_section('jenkins')
 
         return config
-
-    @staticmethod
-    def get_test_resource(resource):
-        FileUtils.to_absolute_path("resources/%s" % resource)
 
     @staticmethod
     def assert_valid_server_installation(home):
