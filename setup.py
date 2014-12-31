@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='xl-helper',
-    version='1.0.4',
+    version='1.0.5-SNAPSHOT',
     description='XL Deploy helper',
     long_description='This tool helps with installation and upgrade of XL Deploy and plugins',
     author='Mike Kotsur',
@@ -13,6 +13,6 @@ setup(
     packages=find_packages(where=".", exclude=["tests*"]),
     package_data={'xl_helper': ['deployit.conf', '.xl-helper.defaults']},
     include_package_data=True,
-    install_requires=['jenkinsapi', 'argparse'],
-    scripts=['bin/xl-helper']
+    install_requires=['jenkinsapi', 'argparse', 'pytz'],
+    scripts=['xl-helper']
 )
