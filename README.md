@@ -61,9 +61,6 @@ Running tests: `nosetests -v`
 
 Tests are also runnable from IntelliJ
 
-## New version
+## Releasing new version
 
-* `python setup.py sdist` and test the distribution created at `dist` folder;
-* Bump the version;
-* Create a tag (see previous ones for the format);
-* `python setup.py sdist upload`
+[read here](release.md)
