@@ -18,6 +18,12 @@ package { "default-jre":
   require => Exec ['update_repo'],
 }
 
+
+package { "unzip":
+  ensure => "unzip",
+  require => Exec ['update_repo'],
+}
+
 package { "vim":
   ensure => "installed",
   require => Exec ['update_repo'],
